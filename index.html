@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>founderAid · Ontario Start-up Checklist</title>
+<meta name="description" content="Get a personalised checklist of the registrations, permits, costs and timelines to start a business in Ontario.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef; --card:#ffffff; --ink:#1c2321; --muted:#5d6763; --line:#e3dfd6;
+  --brand:#1f6f5c; --brand-ink:#ffffff; --brand-soft:#e3f0ec; --accent:#c8692b;
+  --warn:#8a5a00; --warn-soft:#fff4dc; --radius:14px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,sans-serif}
+a{color:var(--brand)}
+.wrap{max-width:860px;margin:0 auto;padding:0 16px}
+header{padding:28px 0 8px}
+.logo{font-weight:700;letter-spacing:-.01em;font-size:18px}
+.logo span{color:var(--brand)}
+.hero h1{font-family:Fraunces,Georgia,serif;font-size:clamp(28px,5vw,42px);line-height:1.15;margin:18px 0 10px}
+.hero p{color:var(--muted);margin:0 0 22px;max-width:620px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin:0 0 18px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:640px){.grid{grid-template-columns:1fr}}
+label.f{display:block;font-weight:600;font-size:14px;margin-bottom:6px}
+select,input[type=text],input[type=email],textarea{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;font:inherit;background:#fff;color:var(--ink)}
+textarea{min-height:70px;resize:vertical}
+.btn{display:inline-block;border:0;border-radius:10px;padding:12px 18px;font:600 15px Inter,sans-serif;cursor:pointer;background:var(--brand);color:var(--brand-ink)}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent;color:var(--brand);border:1.5px solid var(--brand)}
+.btn.accent{background:var(--accent)}
+.hidden{display:none!important}
+.summary{display:flex;gap:12px;flex-wrap:wrap;margin:6px 0 4px}
+.stat{flex:1;min-width:150px;background:var(--brand-soft);border-radius:12px;padding:14px}
+.stat b{display:block;font-size:22px}
+.stat small{color:var(--muted)}
+.step{border-top:1px solid var(--line);padding:16px 0;display:grid;grid-template-columns:34px 1fr;gap:12px}
+.step:first-child{border-top:0}
+.num{width:28px;height:28px;border-radius:50%;background:var(--brand);color:#fff;display:grid;place-items:center;font-weight:700;font-size:13px}
+.step h3{margin:0 0 4px;font-size:16px}
+.step p{margin:0 0 6px;color:var(--muted);font-size:14.5px}
+.tags{display:flex;gap:6px;flex-wrap:wrap;font-size:12.5px}
+.tag{background:#f1efe9;border-radius:999px;padding:3px 10px}
+.tag.cost{background:var(--brand-soft)}
+.tag.when{background:var(--warn-soft);color:var(--warn)}
+.tag.opt{background:#eef0ff;color:#3b3f9a}
+.note{font-size:13px;color:var(--muted)}
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:640px){.tiers{grid-template-columns:1fr}}
+.tier{border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:8px}
+.tier.pop{border:2px solid var(--brand)}
+.tier h4{margin:0}
+.tier .price{font-size:22px;font-weight:700}
+.tier ul{margin:0;padding-left:18px;font-size:14px;color:var(--muted);flex:1}
+fieldset{border:0;padding:0;margin:0 0 16px}
+legend{font-weight:600;font-size:14.5px;margin-bottom:8px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts label{border:1px solid var(--line);border-radius:999px;padding:7px 13px;font-size:14px;cursor:pointer;background:#fff}
+.opts input{margin-right:6px}
+.opts label:has(input:checked){border-color:var(--brand);background:var(--brand-soft)}
+.thanks{background:var(--brand-soft);border-radius:12px;padding:14px;font-weight:500}
+.modal{position:fixed;inset:0;background:rgba(20,25,23,.45);display:grid;place-items:center;padding:16px;z-index:10}
+.modal .card{max-width:440px;width:100%}
+footer{padding:10px 0 40px;font-size:13px;color:var(--muted)}
+.rate{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.rate button{font-size:20px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:6px 14px;cursor:pointer}
+.rate button.on{border-color:var(--brand);background:var(--brand-soft)}
+@media print{.noprint{display:none!important}body{background:#fff}.card{border:0}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><div class="logo">founder<span>Aid</span> <span class="note">· Ontario pilot</span></div></header>
+
+  <section class="hero">
+    <h1>Every registration, permit, cost and deadline to start your Ontario business — in one checklist.</h1>
+    <p>Answer six quick questions. Get a step-by-step list with government fees, timing, and links to the official source for each step. Free, no account needed.</p>
+  </section>
+
+  <!-- STEP 1: INPUTS -->
+  <section class="card" id="formCard">
+    <div class="grid">
+      <div>
+        <label class="f" for="sector">What kind of business?</label>
+        <select id="sector">
+          <option value="">Choose…</option>
+          <option value="food">Food & beverage (restaurant, café, catering, food truck)</option>
+          <option value="retail">Retail store</option>
+          <option value="online">Online / e-commerce</option>
+          <option value="professional">Consulting / professional services</option>
+          <option value="personal">Personal services (salon, spa, esthetics, tattoo)</option>
+          <option value="trades">Construction & skilled trades</option>
+          <option value="other">Other / not listed</option>
+        </select>
+      </div>
+      <div>
+        <label class="f" for="structure">Legal structure</label>
+        <select id="structure">
+          <option value="unsure">Not sure yet</option>
+          <option value="sole">Sole proprietorship</option>
+          <option value="partner">General partnership</option>
+          <option value="oncorp">Ontario corporation</option>
+          <option value="fedcorp">Federal corporation</option>
+        </select>
+      </div>
+      <div>
+        <label class="f" for="premises">Where will you operate?</label>
+        <select id="premises">
+          <option value="home">From home</option>
+          <option value="store">Storefront / office / commercial space</option>
+          <option value="online">Online only</option>
+          <option value="mobile">Mobile (client sites, vehicle, markets)</option>
+        </select>
+      </div>
+      <div>
+        <label class="f" for="city">Municipality</label>
+        <select id="city">
+          <option>Toronto</option><option>Ottawa</option><option>Mississauga</option><option>Brampton</option>
+          <option>Hamilton</option><option>London</option><option>Markham</option><option>Vaughan</option>
+          <option>Kitchener-Waterloo</option><option>Milton / Halton</option><option>Other Ontario</option>
+        </select>
+      </div>
+      <div>
+        <label class="f" for="employees">Will you hire employees in year one?</label>
+        <select id="employees">
+          <option value="no">No, just me (or partners)</option>
+          <option value="yes">Yes</option>
+        </select>
+      </div>
+      <div>
+        <label class="f" for="revenue">Expected sales in first 12 months</label>
+        <select id="revenue">
+          <option value="low">Under $30,000</option>
+          <option value="high">$30,000 or more</option>
+          <option value="unsure">Not sure</option>
+        </select>
+      </div>
+      <div id="alcoholWrap" class="hidden">
+        <label class="f" for="alcohol">Will you sell or serve alcohol?</label>
+        <select id="alcohol"><option value="no">No</option><option value="yes">Yes</option></select>
+      </div>
+    </div>
+    <p style="margin:18px 0 0"><button class="btn" id="go">Build my checklist →</button></p>
+    <p class="note" id="formErr" style="color:#b3261e"></p>
+  </section>
+
+  <!-- STEP 2: RESULTS -->
+  <section id="results" class="hidden">
+    <div class="card">
+      <h2 style="margin:0 0 6px;font-size:22px">Your start-up checklist</h2>
+      <p class="note" id="profileLine"></p>
+      <div class="summary">
+        <div class="stat"><b id="sCount">0</b><small>required steps</small></div>
+        <div class="stat"><b id="sCost">$0</b><small>known government fees</small></div>
+        <div class="stat"><b id="sVar">0</b><small>steps with costs that vary — confirm locally</small></div>
+      </div>
+      <div id="steps"></div>
+      <p class="note">Information only, not legal or tax advice. Government fees as listed on official Ontario and federal sites (checked November 2026). Always confirm with the linked source; municipal requirements change often — <a href="https://services.bizpal-perle.ca/" target="_blank" rel="noopener" data-ext="bizpal">BizPaL</a> lists them by municipality.</p>
+      <p class="noprint"><button class="btn ghost" id="printBtn">Print / save as PDF</button></p>
+    </div>
+
+    <!-- RATING -->
+    <div class="card noprint" id="rateCard">
+      <h3 style="margin:0 0 8px">Was this checklist useful?</h3>
+      <div class="rate">
+        <button data-r="up" aria-label="Useful">👍</button>
+        <button data-r="down" aria-label="Not useful">👎</button>
+        <span class="note" id="rateMsg"></span>
+      </div>
+      <div id="missingWrap" class="hidden" style="margin-top:12px">
+        <label class="f" for="missing">Anything missing or wrong? (optional)</label>
+        <textarea id="missing" placeholder="e.g. my city also required…"></textarea>
+        <p style="margin:8px 0 0"><button class="btn ghost" id="missingBtn">Send</button></p>
+      </div>
+    </div>
+
+    <!-- SURVEY -->
+    <div class="card noprint" id="surveyCard">
+      <h3 style="margin:0 0 4px">Help us improve — 5 quick questions (about 60 seconds)</h3>
+      <p class="note" style="margin:0 0 16px">Anonymous. We're students at Carleton University researching how founders handle start-up paperwork.</p>
+      <form id="survey">
+        <fieldset><legend>1. Have you started a business in Ontario?</legend>
+          <div class="opts">
+            <label><input type="radio" name="q1" value="yes_recent" required>Yes, in the last 2 years</label>
+            <label><input type="radio" name="q1" value="yes_older">Yes, more than 2 years ago</label>
+            <label><input type="radio" name="q1" value="planning">Not yet — planning to</label>
+            <label><input type="radio" name="q1" value="no">No</label>
+          </div>
+        </fieldset>
+        <fieldset class="past"><legend>2. Did you miss a requirement, or learn about one late (a licence, tax account, permit)?</legend>
+          <div class="opts">
+            <label><input type="radio" name="q2" value="yes">Yes</label>
+            <label><input type="radio" name="q2" value="no">No</label>
+            <label><input type="radio" name="q2" value="unsure">Not sure</label>
+          </div>
+        </fieldset>
+        <fieldset><legend><span class="pastL">3. What did you use to figure out the requirements?</span><span class="planL hidden">3. What have you used so far to figure out the requirements?</span> (pick all)</legend>
+          <div class="opts">
+            <label><input type="checkbox" name="q3" value="google">Google / YouTube</label>
+            <label><input type="checkbox" name="q3" value="gov">ontario.ca / canada.ca / ServiceOntario</label>
+            <label><input type="checkbox" name="q3" value="bizpal">BizPaL</label>
+            <label><input type="checkbox" name="q3" value="pro">Accountant or lawyer</label>
+            <label><input type="checkbox" name="q3" value="service">Paid service (e.g. Ownr)</label>
+            <label><input type="checkbox" name="q3" value="sbec">Small Business Centre / incubator</label>
+            <label><input type="checkbox" name="q3" value="friends">Friends / family</label>
+            <label><input type="checkbox" name="q3" value="ai">ChatGPT or another AI</label>
+          </div>
+        </fieldset>
+        <fieldset><legend><span class="pastL">4. Roughly how many hours did researching and filing take?</span><span class="planL hidden">4. Roughly how many hours have you spent researching so far?</span></legend>
+          <div class="opts">
+            <label><input type="radio" name="q4" value="lt2">Under 2</label>
+            <label><input type="radio" name="q4" value="2-5">2–5</label>
+            <label><input type="radio" name="q4" value="5-10">5–10</label>
+            <label><input type="radio" name="q4" value="10+">10+</label>
+          </div>
+        </fieldset>
+        <fieldset><legend>5. Did you pay anyone to help with registration or compliance?</legend>
+          <div class="opts">
+            <label><input type="radio" name="q5" value="no">No</label>
+            <label><input type="radio" name="q5" value="lt250">Yes, under $250</label>
+            <label><input type="radio" name="q5" value="250-1000">Yes, $250–$1,000</label>
+            <label><input type="radio" name="q5" value="1000+">Yes, over $1,000</label>
+            <label class="planOnly hidden"><input type="radio" name="q5" value="na">Not yet</label>
+          </div>
+        </fieldset>
+        <button class="btn" type="submit">Submit answers</button>
+      </form>
+      <div id="surveyThanks" class="thanks hidden">Thank you — your answers help a lot.</div>
+    </div>
+
+    <!-- PRICING (fake door, honest) -->
+    <div class="card noprint" id="tierCard">
+      <h3 style="margin:0 0 4px">Want founderAid to do the paperwork with you?</h3>
+      <p class="note" style="margin:0 0 14px">We're building the full assistant now. Reserve a spot — nothing is charged.</p>
+      <div class="tiers">
+        <div class="tier">
+          <h4>Explore</h4><div class="price">Free</div>
+          <ul><li>This checklist</li><li>Official links</li></ul>
+          <button class="btn ghost" data-tier="explore">Keep me updated</button>
+        </div>
+        <div class="tier pop">
+          <h4>Launch</h4><div class="price" id="pLaunch"></div>
+          <ul><li>Pre-filled forms for each step</li><li>Deadline reminders</li><li>Receipt & document vault</li></ul>
+          <button class="btn" data-tier="launch">Reserve Launch</button>
+        </div>
+        <div class="tier">
+          <h4>Business</h4><div class="price" id="pBusiness"></div>
+          <ul><li>Everything in Launch</li><li>Payroll, HST & WSIB set-up help</li><li>Annual compliance calendar</li></ul>
+          <button class="btn ghost" data-tier="business">Reserve Business</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>A Carleton University TIMG 5002 student venture prototype (Team 11). We store only your answers above and an optional email — no names. <a href="#" id="startOver">Start over</a></footer>
+</div>
+
+<!-- MODAL -->
+<div class="modal hidden" id="modal" role="dialog" aria-modal="true">
+  <div class="card">
+    <h3 style="margin:0 0 6px" id="mTitle">You're on the list</h3>
+    <p class="note" id="mBody">We're not taking payments yet. Leave your email and we'll invite you first, with a founding-member discount.</p>
+    <form id="emailForm">
+      <input type="email" id="email" placeholder="you@email.com" required>
+      <p style="margin:10px 0 0;display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn" type="submit">Notify me</button>
+        <button class="btn ghost" type="button" id="mClose">No thanks</button>
+      </p>
+    </form>
+    <div id="emailThanks" class="thanks hidden">Done — thanks! We'll be in touch.</div>
+  </div>
+</div>
+
+<script>
+/* ================= CONFIG — edit these ================= */
+const CONFIG = {
+  // Paste your Google Apps Script web-app URL here (see SETUP.md). Leave "" to test locally.
+  captureUrl: "",
+  prices: { launch: "$19 / month", business: "$49 / month" },
+  version: "mvp-1"
+};
+/* ======================================================= */
+
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const qs = new URLSearchParams(location.search);
+const source = qs.get("src") || qs.get("utm_source") || (document.referrer ? new URL(document.referrer).hostname : "direct");
+const sid = (()=>{ try{ let v=sessionStorage.getItem("fa_sid"); if(!v){v=Math.random().toString(36).slice(2,10); sessionStorage.setItem("fa_sid",v);} return v;}catch(e){return Math.random().toString(36).slice(2,10);} })();
+let profile = null;
+
+function log(event, details={}){
+  const row = { ts:new Date().toISOString(), session:sid, source, event, version:CONFIG.version, details };
+  try{ const a=JSON.parse(localStorage.getItem("fa_events")||"[]"); a.push(row); localStorage.setItem("fa_events",JSON.stringify(a.slice(-200))); }catch(e){}
+  if(!CONFIG.captureUrl){ console.info("[founderAid log]", row); return; }
+  try{
+    fetch(CONFIG.captureUrl,{method:"POST",mode:"no-cors",keepalive:true,headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(row)});
+  }catch(e){}
+}
+
+$("#pLaunch").textContent = CONFIG.prices.launch;
+$("#pBusiness").textContent = CONFIG.prices.business;
+$("#sector").addEventListener("change", e => $("#alcoholWrap").classList.toggle("hidden", e.target.value!=="food"));
+log("visit");
+
+/* ---------------- Rules engine ---------------- */
+const L = {
+  obrReg: "https://www.ontario.ca/page/business/start/register-your-business-online",
+  fees: "https://www.ontario.ca/page/companies-service-standards-and-fees",
+  fed: "https://ised-isde.canada.ca/site/corporations-canada/en/business-corporations/starting-business-corporation",
+  bn: "https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/registering-your-business/you-need-a-business-number-a-program-account.html",
+  hst: "https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/gst-hst-businesses/gst-hst-registration.html",
+  payroll: "https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/payroll.html",
+  wsib: "https://www.wsib.ca/en/businesses/registration-and-coverage",
+  eht: "https://www.ontario.ca/document/employer-health-tax-eht",
+  esa: "https://www.ontario.ca/document/employment-standards-ontario-poster-version-90",
+  bizpal: "https://services.bizpal-perle.ca/",
+  structure: "https://www.ontario.ca/page/business/start/choose-business-structure",
+  food: "https://www.ontario.ca/page/food-premises-inspections",
+  foodHandler: "https://www.ontario.ca/laws/regulation/170493",
+  agco: "https://www.agco.ca/en/alcohol/licences-and-permits",
+  personal: "https://www.ontario.ca/laws/regulation/180136",
+  trades: "https://www.skilledtradesontario.ca/",
+  cpa: "https://www.ontario.ca/page/your-rights-under-consumer-protection-act",
+  casl: "https://crtc.gc.ca/eng/com500/faq500.htm",
+  privacy: "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/",
+  phu: "https://www.ontario.ca/page/public-health-unit-locations"
+};
+
+function buildSteps(p){
+  const S=[]; const add=o=>S.push(o);
+  const corp = p.structure==="oncorp"||p.structure==="fedcorp";
+
+  if(p.structure==="unsure"){
+    add({t:"Choose your legal structure",d:"Sole proprietorship and partnership are cheapest to start; a corporation limits personal liability but costs more to set up and file taxes for. This checklist assumes a sole proprietorship — change the answer above to see corporation steps.",cost:0,when:"Before registering",link:L.structure,src:"ontario.ca"});
+  }
+  if(p.structure==="sole"||p.structure==="partner"||p.structure==="unsure"){
+    add({t:"Register your business name (Ontario Business Registry)",d:"Required if you operate under any name other than your own legal name. Renew every 5 years ($60).",cost:60,when:"Immediate online",link:L.obrReg,src:"ontario.ca"});
+  }
+  if(p.structure==="oncorp"){
+    add({t:"Get a NUANS name search report",d:"Ontario-biased NUANS report for your proposed corporate name (skip if you choose a numbered company).",cost:14,approx:true,when:"Same day",link:L.fees,src:"Search house"});
+    add({t:"Incorporate in Ontario (Ontario Business Registry)",d:"File articles of incorporation online. Afterwards, file a free annual return each year and keep a minute book.",cost:300,when:"Immediate online",link:L.fees,src:"ontario.ca"});
+  }
+  if(p.structure==="fedcorp"){
+    add({t:"Get a NUANS name search report",d:"Required for a named federal corporation (skip for a numbered company).",cost:14,approx:true,when:"Same day",link:L.fed,src:"Corporations Canada"});
+    add({t:"Incorporate federally (Corporations Canada)",d:"File articles online; federal annual returns are due each year.",cost:200,when:"Usually 1–2 business days",link:L.fed,src:"canada.ca"});
+    add({t:"Register your federal corporation in Ontario",d:"A federal corporation operating in Ontario must file an initial return with the Ontario Business Registry within 60 days.",cost:0,when:"Within 60 days",link:L.obrReg,src:"ontario.ca"});
+  }
+  add({t:"Get a CRA Business Number (BN)",d: corp?"Issued automatically when you incorporate — note it for every tax account below.":"Get one when you open your first CRA program account (e.g. GST/HST).",cost:0,when:corp?"Automatic":"Same day online",link:L.bn,src:"canada.ca"});
+
+  if(p.revenue==="high"){
+    add({t:"Register for GST/HST",d:"Required once your taxable sales pass $30,000 over four consecutive calendar quarters. You must charge 13% HST in Ontario and file returns.",cost:0,when:"Before you exceed $30,000",link:L.hst,src:"canada.ca"});
+  } else {
+    add({t:"GST/HST registration (optional for now)",d:"Not required while taxable sales stay under $30,000 over four quarters, but you can register voluntarily to claim tax credits on start-up purchases. Track your sales.",cost:0,when:"Optional",opt:true,link:L.hst,src:"canada.ca"});
+  }
+
+  if(p.employees==="yes"){
+    add({t:"Open a CRA payroll account",d:"Needed to deduct and remit income tax, CPP and EI for employees.",cost:0,when:"Before first payday",link:L.payroll,src:"canada.ca"});
+    add({t:"Register with WSIB",d:"Most employers must register within 10 days of hiring their first worker. Premiums depend on your industry rate group.",cost:null,when:"Within 10 days of hiring",link:L.wsib,src:"wsib.ca"});
+    add({t:"Post the Employment Standards poster",d:"Display the latest 'Employment Standards in Ontario' poster and give each employee a copy.",cost:0,when:"When you hire",link:L.esa,src:"ontario.ca"});
+    add({t:"Employer Health Tax (EHT) check",d:"Eligible employers are exempt on the first $1 million of annual Ontario payroll. Register only if your payroll exceeds the exemption.",cost:0,when:"Only if payroll > $1M",opt:true,link:L.eht,src:"ontario.ca"});
+  }
+
+  if(p.premises!=="online"){
+    add({t:`Check for a ${p.city} business licence`,d:"Many municipalities license specific business types (food, personal services, trades, retail, home-based). Requirements and fees vary by city and business type.",cost:null,when:"Before opening",link:L.bizpal,src:"BizPaL / your city"});
+  }
+  if(p.premises==="home"){
+    add({t:"Confirm home-business zoning",d:"Your municipal zoning bylaw may limit customer visits, signage, staff or parking for home-based businesses.",cost:null,when:"Before opening",link:L.bizpal,src:"Your city"});
+  }
+  if(p.premises==="store"){
+    add({t:"Zoning, building and sign permits",d:"Confirm the space is zoned for your use; renovations and exterior signs usually need municipal permits.",cost:null,when:"Before lease signing / renovations",link:L.bizpal,src:"Your city"});
+  }
+
+  if(p.sector==="food"){
+    add({t:"Notify your public health unit (food premises inspection)",d:"Contact your local public health unit before opening; an inspector will check your premises. No fee for the inspection.",cost:0,when:"Before opening",link:L.food,src:"ontario.ca"});
+    add({t:"Certified food handler on site",d:"At least one certified food handler or supervisor must be on site during every hour of operation (O. Reg. 493/17). Course fees vary by provider.",cost:null,when:"Before opening",link:L.foodHandler,src:"ontario.ca"});
+    if(p.alcohol==="yes"){
+      add({t:"AGCO liquor sales licence",d:"Required to sell or serve alcohol; staff serving alcohol need Smart Serve training. Plan for several weeks of processing.",cost:null,when:"Apply early — weeks",link:L.agco,src:"agco.ca"});
+    }
+  }
+  if(p.sector==="personal"){
+    add({t:"Public health inspection (personal service setting)",d:"Salons, spas, esthetics, tattoo and piercing studios must notify the local public health unit and meet O. Reg. 136/18 infection-control rules.",cost:0,when:"Before opening",link:L.personal,src:"ontario.ca"});
+  }
+  if(p.sector==="trades"){
+    add({t:"Trade certification",d:"Compulsory trades (e.g. electrician, plumber) require a Certificate of Qualification from Skilled Trades Ontario.",cost:null,when:"Before doing regulated work",link:L.trades,src:"Skilled Trades Ontario"});
+    if(p.employees!=="yes"){
+      add({t:"Check WSIB mandatory coverage for construction",d:"In construction, many independent operators, sole proprietors and partners must have WSIB coverage even with no employees.",cost:null,when:"Before starting work",link:L.wsib,src:"wsib.ca"});
+    }
+  }
+  if(p.sector==="online"||p.premises==="online"){
+    add({t:"Online selling rules",d:"Ontario's Consumer Protection Act requires specific disclosures and cancellation rights for internet agreements.",cost:0,when:"Before launch",link:L.cpa,src:"ontario.ca"});
+    add({t:"Email marketing consent (CASL) and privacy",d:"Get consent before sending commercial emails, and protect customer data under federal privacy law (PIPEDA).",cost:0,when:"Before marketing",link:L.casl,src:"crtc.gc.ca"});
+  }
+  if(p.sector==="professional"){
+    add({t:"Check if your profession is regulated",d:"Accounting, engineering, law, real estate, health and other regulated professions require a licence from their regulatory body.",cost:null,when:"Before offering services",opt:true,link:L.bizpal,src:"Regulatory body"});
+  }
+  return S;
+}
+
+function money(n){return "$"+n.toLocaleString("en-CA");}
+
+function render(p){
+  const steps = buildSteps(p);
+  const req = steps.filter(s=>!s.opt);
+  const fixed = req.reduce((a,s)=>a+(s.cost||0),0);
+  const varies = req.filter(s=>s.cost===null).length;
+  $("#sCount").textContent = req.length;
+  $("#sCost").textContent = (req.some(s=>s.approx)?"≈ ":"")+money(fixed);
+  $("#sVar").textContent = varies;
+  const lbl = id=>$(id).selectedOptions[0].textContent;
+  $("#profileLine").textContent = `${lbl("#sector")} · ${lbl("#structure")} · ${lbl("#premises")} · ${p.city}`;
+  $("#steps").innerHTML = steps.map((s,i)=>`
+    <div class="step"><div class="num">${i+1}</div><div>
+      <h3>${s.t}</h3><p>${s.d}</p>
+      <div class="tags">
+        <span class="tag cost">${s.cost===null?"Cost varies":s.cost===0?"Free":(s.approx?"≈ ":"")+money(s.cost)}</span>
+        <span class="tag when">${s.when}</span>
+        ${s.opt?'<span class="tag opt">Depends on your situation</span>':""}
+        <a class="tag" href="${s.link}" target="_blank" rel="noopener" data-ext="${s.src}">Official source: ${s.src} ↗</a>
+      </div></div></div>`).join("");
+  return {steps:steps.length, required:req.length, fixed, varies};
+}
+
+$("#go").addEventListener("click", ()=>{
+  if(!$("#sector").value){ $("#formErr").textContent="Please choose what kind of business."; return; }
+  $("#formErr").textContent="";
+  profile = { sector:$("#sector").value, structure:$("#structure").value, premises:$("#premises").value,
+    city:$("#city").value, employees:$("#employees").value, revenue:$("#revenue").value,
+    alcohol:$("#sector").value==="food"?$("#alcohol").value:"no" };
+  const r = render(profile);
+  $("#results").classList.remove("hidden");
+  $("#results").scrollIntoView({behavior:"smooth"});
+  log("checklist_generated",{...profile,...r});
+});
+
+document.addEventListener("click", e=>{
+  const a = e.target.closest("a[data-ext]");
+  if(a) log("source_link_click",{source:a.dataset.ext, url:a.href});
+});
+$("#printBtn").addEventListener("click", ()=>{ log("print_or_save"); window.print(); });
+
+/* rating */
+$$(".rate button").forEach(b=>b.addEventListener("click", ()=>{
+  $$(".rate button").forEach(x=>x.classList.toggle("on", x===b));
+  log("rating",{rating:b.dataset.r, sector:profile?.sector});
+  $("#rateMsg").textContent="Thanks!";
+  $("#missingWrap").classList.remove("hidden");
+}));
+$("#missingBtn").addEventListener("click", ()=>{
+  const v=$("#missing").value.trim(); if(!v) return;
+  log("feedback_text",{text:v.slice(0,1000), sector:profile?.sector});
+  $("#missingWrap").innerHTML='<div class="thanks">Got it — thank you.</div>';
+});
+
+/* survey: adapt wording for planners */
+$$('input[name="q1"]').forEach(r=>r.addEventListener("change", ()=>{
+  const planning = $('input[name="q1"]:checked').value==="planning" || $('input[name="q1"]:checked').value==="no";
+  $$(".past").forEach(el=>el.classList.toggle("hidden", planning));
+  $$(".pastL").forEach(el=>el.classList.toggle("hidden", planning));
+  $$(".planL").forEach(el=>el.classList.toggle("hidden", !planning));
+  $$(".planOnly").forEach(el=>el.classList.toggle("hidden", !planning));
+}));
+$("#survey").addEventListener("submit", e=>{
+  e.preventDefault();
+  const f=new FormData(e.target);
+  const ans={ q1_started:f.get("q1"), q2_missed:f.get("q2")||"", q3_used:f.getAll("q3").join("|"),
+    q4_hours:f.get("q4")||"", q5_paid:f.get("q5")||"", sector:profile?.sector||"" };
+  log("survey",ans);
+  e.target.classList.add("hidden"); $("#surveyThanks").classList.remove("hidden");
+});
+
+/* fake door — honest: no payment taken */
+let currentTier=null;
+$$("[data-tier]").forEach(b=>b.addEventListener("click", ()=>{
+  currentTier=b.dataset.tier;
+  log("tier_click",{tier:currentTier, price:CONFIG.prices[currentTier]||"free", sector:profile?.sector});
+  $("#mTitle").textContent = currentTier==="explore" ? "Stay in the loop" : `Reserve ${currentTier[0].toUpperCase()+currentTier.slice(1)}`;
+  $("#mBody").textContent = currentTier==="explore" ? "Leave your email and we'll tell you when new features launch." :
+    "We're not taking payments yet. Leave your email and we'll invite you first, with a founding-member discount.";
+  $("#emailForm").classList.remove("hidden"); $("#emailThanks").classList.add("hidden");
+  $("#modal").classList.remove("hidden");
+}));
+$("#mClose").addEventListener("click", ()=>{ log("tier_declined_email",{tier:currentTier}); $("#modal").classList.add("hidden"); });
+$("#emailForm").addEventListener("submit", e=>{
+  e.preventDefault();
+  log("email_signup",{tier:currentTier, email:$("#email").value.trim().slice(0,200)});
+  $("#emailForm").classList.add("hidden"); $("#emailThanks").classList.remove("hidden");
+  setTimeout(()=>$("#modal").classList.add("hidden"),1800);
+});
+$("#startOver").addEventListener("click", e=>{ e.preventDefault(); $("#results").classList.add("hidden"); window.scrollTo({top:0,behavior:"smooth"}); });
+</script>
+</body>
+</html>
