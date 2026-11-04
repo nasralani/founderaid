@@ -7,7 +7,8 @@ import csv, json, sys
 from collections import Counter, defaultdict
 
 rows = list(csv.DictReader(open(sys.argv[1], encoding="utf-8")))
-rows = [r for r in rows if r.get("source") != "team"]
+#rows = [r for r in rows if r.get("source") != "team"]
+if "--all" not in sys.argv: rows = [r for r in rows if r.get("source") != "team"]
 by = defaultdict(list)
 for r in rows:
     r["d"] = json.loads(r.get("details") or "{}")
