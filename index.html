@@ -296,7 +296,7 @@ function log(event, details={}){
   try{ const a=JSON.parse(localStorage.getItem("fa_events")||"[]"); a.push(row); localStorage.setItem("fa_events",JSON.stringify(a.slice(-200))); }catch(e){}
   if(!CONFIG.captureUrl){ console.info("[founderAid log]", row); return; }
   try{
-    fetch(CONFIG.captureUrl,{method:"POST",mode:"no-cors",keepalive:true,headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(row)});
+    fetch(CONFIG.captureUrl+"?d="+encodeURIComponent(JSON.stringify(row)),{method:"GET",mode:"no-cors",keepalive:true});
   }catch(e){}
 }
 
